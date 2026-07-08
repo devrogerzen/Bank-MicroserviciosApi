@@ -3,7 +3,9 @@ package com.Client.api;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/clientes")
@@ -51,5 +53,56 @@ public class ClientController {
         } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    // === CONSIGNA 1: Operaciones básicas con List ===
+
+    @GetMapping("/activos")
+    public List<Client> obtenerClientesActivos() {
+        return clientService.obtenerClientesActivos();
+    }
+
+    @GetMapping("/nombres")
+    public List<String> obtenerNombresCompletos() {
+        return clientService.obtenerNombresCompletos();
+    }
+
+    @GetMapping("/ordenados")
+    public List<Client> obtenerClientesOrdenadosPorApellido() {
+        return clientService.obtenerClientesOrdenadosPorApellido();
+    }
+
+    // === CONSIGNA 2: Operaciones con Map ===
+
+    @GetMapping("/{clienteId}/transacciones")
+    public List<Transaccion> obtenerTransacciones(@PathVariable Long clienteId) {
+        return clientService.obtenerTransacciones(clienteId);
+    }
+
+    @GetMapping("/saldos-totales")
+    public Map<Long, Double> calcularSaldosTotalesPorCliente() {
+        return clientService.calcularSaldosTotalesPorCliente();
+    }
+
+    @GetMapping("/mayor-saldo")
+    public Long obtenerClienteConMayorSaldo() {
+        return clientService.obtenerClienteConMayorSaldo();
+    }
+
+    // === CONSIGNA 3: Streams avanzados ===
+
+    @GetMapping("/depositos")
+    public List<Transaccion> obtenerTodosLosDepositos() {
+        return clientService.obtenerTodosLosDepositos();
+    }
+
+    @GetMapping("/transacciones/existe-mayor-a")
+    public boolean existeTransaccionMayorA(@RequestParam double umbral) {
+        return clientService.existeTransaccionMayorA(umbral);
+    }
+
+    @GetMapping("/{clienteId}/transacciones/promedio")
+    public double calcularPromedioTransacciones(@PathVariable Long clienteId) {
+        return clientService.calcularPromedioTransacciones(clienteId);
     }
 }

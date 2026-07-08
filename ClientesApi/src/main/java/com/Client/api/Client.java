@@ -23,6 +23,7 @@ public class Client {
     private String direccion;
     private String telefono;
     private String email;
+    private boolean activo;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Cuenta> cuentas;
